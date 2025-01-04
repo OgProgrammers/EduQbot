@@ -1,0 +1,13 @@
+# Specify line endings for specific file types
+*.json text eol=lf
+*.txt text eol=lf
+*.csv text eol=lf
+*.md text eol=lf
+# Treat all files as text, except for binary files
+* text eol=lf
+# Treat binary files as binary, no normalization
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+app/model/model.safetensors filter=lfs diff=lfs merge=lfs -text

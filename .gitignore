@@ -1,0 +1,14 @@
+# Python
+*.pyc
+__pycache__/
+venv/
+
+# Environment Variables
+.env
+
+# IDE Config
+.vscode/
+.idea/
+app/model/model.safetensors
+app/model/vocab.txt
+

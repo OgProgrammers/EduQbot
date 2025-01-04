@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduQBot</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">EduQBot</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#question">Ask Question</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <div id="question" class="mt-5">
+            <h3>Ask a Question</h3>
+
+            <!-- Context Input -->
+            <textarea class="form-control mb-3" id="contextBox" placeholder="Enter context (text or information) here..."></textarea>
+
+            <!-- Question Input -->
+            <textarea class="form-control mb-3" id="questionBox" placeholder="Type your question here..."></textarea>
+
+            <!-- Submit Button -->
+            <button class="btn btn-primary" onclick="submitQuestion()">Submit</button>
+        </div>
+
+        <div id="answer" class="mt-5">
+            <h3>Answer</h3>
+            <div id="answerBox" class="border p-3">Your answer will appear here.</div>
+        </div>
+    </div>
+
+    <script>
+        function submitQuestion() {
+            const question = document.getElementById('questionBox').value;
+            const context = document.getElementById('contextBox').value;
+
+            // Display "Answering" message immediately
+            document.getElementById('answerBox').innerText = 'Answering: ' + question;
+
+            // Create the data to send to the backend
+            const requestData = {
+                question: question,
+                context: context
+            };
+
+            // Make the API call to your backend
+            fetch('http://127.0.0.1:8000/answer', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData) // Convert the data to JSON
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display the answer in the answer box
+                document.getElementById('answerBox').innerText = 'Answer: ' + data.answer;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('answerBox').innerText = 'An error occurred while fetching the answer.';
+            });
+        }
+    </script>
+</body>
+</html>
